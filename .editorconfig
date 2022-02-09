@@ -1,16 +1,4 @@
-# Editor configuration, see https://editorconfig.org
-root = true
+﻿[*.cs]
 
-[*]
-charset = utf-8
-indent_style = space
-indent_size = 2
-insert_final_newline = true
-trim_trailing_whitespace = true
-
-[*.ts]
-quote_type = single
-
-[*.md]
-max_line_length = off
-trim_trailing_whitespace = false
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = none
