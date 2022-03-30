@@ -7,6 +7,7 @@ using BL;
 using Entity;
 using AutoMapper;
 using DTO;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,6 +16,7 @@ namespace Volunteer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
 
     public class FamilyController : ControllerBase
     {
@@ -52,16 +54,17 @@ namespace Volunteer.Controllers
             FamilyDTO fDTO = mapper.Map<Family, FamilyDTO>(f);
             return fDTO;
         }
-        
+        //post family
         // POST api/<FamilyController>
         [HttpPost]
         public  async Task<int> Post([FromBody] Family new_family)
         {
 
+
             return await familybl.PostFamily(new_family);
         }
     
-
+        //put family
         // PUT api/<FamilyController>/5
         [HttpPut("{id}")]
        public async Task<FamilyDTO> Put( [FromBody] Family family)
@@ -70,12 +73,13 @@ namespace Volunteer.Controllers
             FamilyDTO fDTO = mapper.Map<Family, FamilyDTO>(f);
             return fDTO;
        }
-
+        //delete family
         // DELETE api/<FamilyController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
             await familybl.DeleteFamily(id);
+
         }
 
     }

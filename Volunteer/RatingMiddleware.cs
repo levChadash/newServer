@@ -38,7 +38,7 @@ namespace Volunteer
          
             };
             
-            await vrc.Rating.AddAsync(r);
+            await vrc.Ratings.AddAsync(r);
             await vrc.SaveChangesAsync();
            
             await _next(httpContext);

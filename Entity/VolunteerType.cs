@@ -11,14 +11,16 @@ namespace Entity
         {
             Comments = new HashSet<Comment>();
             Families = new HashSet<Family>();
-            Registers = new HashSet<Register>();
+            SpecialProjects = new HashSet<SpecialProject>();
+            Volunteerings = new HashSet<Volunteering>();
         }
 
         public int Id { get; set; }
-        public string Dscription { get; set; }
+        public string Type { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Family> Families { get; set; }
-        public virtual ICollection<Register> Registers { get; set; }
+        public virtual ICollection<SpecialProject> SpecialProjects { get; set; }
+        public virtual ICollection<Volunteering> Volunteerings { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BL;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Volunteer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize]
     public class ReportController : ControllerBase
     {
         IReportBL reportbl;
@@ -35,6 +37,7 @@ namespace Volunteer.Controllers
 
         //POST api/<ReportController>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<int> Post([FromBody] Report rt)
         {
             return await this.reportbl.postReport(rt);

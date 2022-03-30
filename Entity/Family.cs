@@ -9,7 +9,7 @@ namespace Entity
     {
         public Family()
         {
-            Matches = new HashSet<Match>();
+            Volunteerings = new HashSet<Volunteering>();
         }
 
         public int Id { get; set; }
@@ -18,15 +18,14 @@ namespace Entity
         public string PhoneNumber { get; set; }
         public string PhoneNumber2 { get; set; }
         public string Email { get; set; }
-        public int NeighborhoodId { get; set; }
+        public string Neighborhood { get; set; }
         public int VolunteerTypeId { get; set; }
         public bool Approved { get; set; }
         public bool Challenging { get; set; }
-        public int StatusId { get; set; }
+        public bool Active { get; set; }
+        public bool OneTime { get; set; }
 
-        public virtual Neighborhood Neighborhood { get; set; }
-        public virtual Status Status { get; set; }
         public virtual VolunteerType VolunteerType { get; set; }
-        public virtual ICollection<Match> Matches { get; set; }
+        public virtual ICollection<Volunteering> Volunteerings { get; set; }
     }
 }

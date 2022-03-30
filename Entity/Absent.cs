@@ -12,8 +12,8 @@ namespace Entity
         public DateTime EndDate { get; set; }
         public string Reason { get; set; }
         public bool Pair { get; set; }
-        public int MatchId { get; set; }
+        public int VolunteeringId { get; set; }
 
-        public virtual Match Match { get; set; }
+        public virtual Volunteering Volunteering { get; set; }
     }
 }

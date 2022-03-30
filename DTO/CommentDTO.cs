@@ -11,10 +11,12 @@ namespace DTO
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string studentName { get; set; }
+        public string FromUserName { get; set; }
+        public string ToUserName { get; set; }
         public string Comment1 { get; set; }
         public string NeighborhoodName { get; set; }
         public string VolunteerType { get; set; }
+
 
     }
 }

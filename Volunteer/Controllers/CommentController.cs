@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BL;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,6 +14,7 @@ namespace Volunteer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class CommentController : ControllerBase
     {
 
@@ -55,13 +57,7 @@ namespace Volunteer.Controllers
             await commentbl.deleteComment(id);
         }
 
-        //comments from students
-        //get
-        //[HttpGet]
-        //public async Task<List<StudentComment>> getStudentComments()
-        //{
-        //    return await ;
-        //}
+        
     }
 }
 

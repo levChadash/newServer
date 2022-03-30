@@ -14,10 +14,12 @@ namespace DTO
         public string PhoneNumber { get; set; }
         public string PhoneNumber2 { get; set; }
         public string Email { get; set; }
-        public string NeighborhoodName { get; set; }
+        public string Neighborhood { get; set; }
         public string VolunteerType { get; set; }
         public bool Approved { get; set; }
         public bool Challenging { get; set; }
-        public string Status { get; set; }
+        public bool Active { get; set; }
+        public bool OneTime { get; set; }
+
     }
 }

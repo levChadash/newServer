@@ -16,11 +16,10 @@ namespace DL
         {
             this.vrc = vrc;
         }
-        //comment to student
+
         //get
         public async Task<List<Comment>> getComments()
         {
-            //throw new Exception("bbbbbbbbb");
             List<Comment> commentL = await vrc.Comments.ToListAsync();
             return commentL;
         }
@@ -56,28 +55,7 @@ namespace DL
             vrc.Comments.Remove(ct);
             await vrc.SaveChangesAsync();
         }
-        //comment from student
-        //get
-        public async Task<List<StudentComment>> getStudentComments()
-        {
-            List<StudentComment> stcommentL = await vrc.StudentComments.ToListAsync();
-            return stcommentL;
-        }
-
-        //getByStudentId
-        public async Task<List<StudentComment>> getStudentCommentByStudentId(int id)
-        {
-            return vrc.StudentComments.Where(sc => sc.StudentId == id).ToList();
-        }
-        //deleteByStudent
-        public async Task deleteStudentComment(int id)
-        {
-            object ct = vrc.StudentComments.FindAsync(id);
-            if (ct == null)
-                throw new Exception();
-            vrc.StudentComments.Remove((StudentComment)(ct));
-            await vrc.SaveChangesAsync();
-        }
+       
 
     }
 }

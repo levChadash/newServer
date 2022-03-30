@@ -1,12 +1,12 @@
 ﻿using System;
-using Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Entity;
 
 #nullable disable
 
-namespace DL
-{
+namespace DL { 
+
     public partial class VolunteerContext : DbContext
     {
         public VolunteerContext()
@@ -19,22 +19,17 @@ namespace DL
         }
 
         public virtual DbSet<Absent> Absents { get; set; }
-        public virtual DbSet<Rating> Rating { get; set; }
-        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<Grade> Grades { get; set; }
-        public virtual DbSet<Match> Matches { get; set; }
-        public virtual DbSet<Neighborhood> Neighborhoods { get; set; }
-        public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<PesachProject> PesachProjects { get; set; }
-        public virtual DbSet<Register> Registers { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
-        public virtual DbSet<Status> Statuses { get; set; }
+        public virtual DbSet<SpecialProject> SpecialProjects { get; set; }
         public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<StudentComment> StudentComments { get; set; }
-        public virtual DbSet<StudentYear> StudentYears { get; set; }
+        public virtual DbSet<StudentsVolunteering> StudentsVolunteerings { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<VolunteerType> VolunteerTypes { get; set; }
+        public virtual DbSet<Volunteering> Volunteerings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -59,8 +54,6 @@ namespace DL
                     .HasColumnType("date")
                     .HasColumnName("end_date");
 
-                entity.Property(e => e.MatchId).HasColumnName("match_id");
-
                 entity.Property(e => e.Pair).HasColumnName("pair");
 
                 entity.Property(e => e.Reason)
@@ -71,55 +64,13 @@ namespace DL
                     .HasColumnType("date")
                     .HasColumnName("start_date");
 
-                entity.HasOne(d => d.Match)
+                entity.Property(e => e.VolunteeringId).HasColumnName("volunteering_id");
+
+                entity.HasOne(d => d.Volunteering)
                     .WithMany(p => p.Absents)
-                    .HasForeignKey(d => d.MatchId)
+                    .HasForeignKey(d => d.VolunteeringId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Absent_Match");
-            });
-
-            modelBuilder.Entity<Admin>(entity =>
-            {
-                entity.ToTable("Admin");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.PersonId).HasColumnName("person_id");
-
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.Admins)
-                    .HasForeignKey(d => d.PersonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Admin_Person");
-            });
-            modelBuilder.Entity<Rating>(entity =>
-            {
-                entity.ToTable("RATING");
-
-                entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
-
-                entity.Property(e => e.Host)
-                    .HasColumnName("HOST")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Method)
-                    .HasColumnName("METHOD")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.Path)
-                    .HasColumnName("PATH")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.RecordDate)
-                 .HasColumnName("Record_Date")
-                 .HasColumnType("datetime");
-
-                entity.Property(e => e.Referer)
-                    .HasColumnName("REFERER")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
+                    .HasConstraintName("FK_Absent_Volunteering");
             });
 
             modelBuilder.Entity<Comment>(entity =>
@@ -136,25 +87,29 @@ namespace DL
                     .HasColumnType("date")
                     .HasColumnName("end_date");
 
-                entity.Property(e => e.NeighborhoodId).HasColumnName("neighborhood_id");
+                entity.Property(e => e.FromUserId).HasColumnName("from_user_id");
+
+                entity.Property(e => e.Neighborhood)
+                    .HasMaxLength(50)
+                    .HasColumnName("neighborhood");
 
                 entity.Property(e => e.StartDate)
                     .HasColumnType("date")
                     .HasColumnName("start_date");
 
-                entity.Property(e => e.StudentId).HasColumnName("student_id");
+                entity.Property(e => e.ToUserId).HasColumnName("to_user_id");
 
                 entity.Property(e => e.VolunteerTypeId).HasColumnName("volunteer_type_id");
 
-                entity.HasOne(d => d.Neighborhood)
-                    .WithMany(p => p.Comments)
-                    .HasForeignKey(d => d.NeighborhoodId)
-                    .HasConstraintName("FK_Comment_Neighborhood");
+                entity.HasOne(d => d.FromUser)
+                    .WithMany(p => p.CommentFromUsers)
+                    .HasForeignKey(d => d.FromUserId)
+                    .HasConstraintName("FK_Comment_User1");
 
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.Comments)
-                    .HasForeignKey(d => d.StudentId)
-                    .HasConstraintName("FK_Comment_Student");
+                entity.HasOne(d => d.ToUser)
+                    .WithMany(p => p.CommentToUsers)
+                    .HasForeignKey(d => d.ToUserId)
+                    .HasConstraintName("FK_Comment_User");
 
                 entity.HasOne(d => d.VolunteerType)
                     .WithMany(p => p.Comments)
@@ -167,6 +122,8 @@ namespace DL
                 entity.ToTable("Family");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
@@ -186,7 +143,12 @@ namespace DL
                     .HasMaxLength(50)
                     .HasColumnName("name");
 
-                entity.Property(e => e.NeighborhoodId).HasColumnName("neighborhood_id");
+                entity.Property(e => e.Neighborhood)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("neighborhood");
+
+                entity.Property(e => e.OneTime).HasColumnName("one_time");
 
                 entity.Property(e => e.PhoneNumber)
                     .IsRequired()
@@ -199,21 +161,7 @@ namespace DL
                     .HasColumnName("phone_number2")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.StatusId).HasColumnName("status_id");
-
                 entity.Property(e => e.VolunteerTypeId).HasColumnName("volunteer_type_id");
-
-                entity.HasOne(d => d.Neighborhood)
-                    .WithMany(p => p.Families)
-                    .HasForeignKey(d => d.NeighborhoodId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Family_Neighborhood");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Families)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Family_Status");
 
                 entity.HasOne(d => d.VolunteerType)
                     .WithMany(p => p.Families)
@@ -233,66 +181,66 @@ namespace DL
                 entity.Property(e => e.StartYear).HasColumnName("start_year");
             });
 
-            modelBuilder.Entity<Match>(entity =>
+            modelBuilder.Entity<Rating>(entity =>
             {
-                entity.ToTable("Match");
+                entity.ToTable("Rating");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.RatingId).HasColumnName("rating_id");
 
-                entity.Property(e => e.DateOfMatch)
-                    .HasColumnType("date")
-                    .HasColumnName("date_of_match");
-
-                entity.Property(e => e.FamilyId).HasColumnName("family_id");
-
-                entity.Property(e => e.RegisterId).HasColumnName("register_id");
-
-                entity.HasOne(d => d.Family)
-                    .WithMany(p => p.Matches)
-                    .HasForeignKey(d => d.FamilyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Match_Family");
-
-                entity.HasOne(d => d.Register)
-                    .WithMany(p => p.Matches)
-                    .HasForeignKey(d => d.RegisterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Match_Register");
-            });
-
-            modelBuilder.Entity<Neighborhood>(entity =>
-            {
-                entity.ToTable("Neighborhood");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
+                entity.Property(e => e.Host)
                     .HasMaxLength(50)
-                    .HasColumnName("description");
-            });
+                    .HasColumnName("host");
 
-            modelBuilder.Entity<Person>(entity =>
-            {
-                entity.ToTable("Person");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.IdNumber)
-                    .IsRequired()
+                entity.Property(e => e.Method)
                     .HasMaxLength(10)
-                    .HasColumnName("id_number")
+                    .HasColumnName("method")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
+                entity.Property(e => e.Path)
                     .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasColumnName("path");
+
+                entity.Property(e => e.RecordDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("record_date");
+
+                entity.Property(e => e.Referer)
+                    .HasMaxLength(100)
+                    .HasColumnName("referer");
+
+                entity.Property(e => e.UserAgent).HasColumnName("user_agent");
             });
 
-            modelBuilder.Entity<PesachProject>(entity =>
+            modelBuilder.Entity<Report>(entity =>
             {
-                entity.ToTable("PesachProject");
+                entity.ToTable("Report");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Comments).HasColumnName("comments");
+
+                entity.Property(e => e.EDate)
+                    .HasColumnType("date")
+                    .HasColumnName("e_date");
+
+                entity.Property(e => e.NumOfVisits).HasColumnName("num_of_visits");
+
+                entity.Property(e => e.SDate)
+                    .HasColumnType("date")
+                    .HasColumnName("s_date");
+
+                entity.Property(e => e.VolunteeringId).HasColumnName("volunteering_id");
+
+                entity.HasOne(d => d.Volunteering)
+                    .WithMany(p => p.Reports)
+                    .HasForeignKey(d => d.VolunteeringId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Report_Volunteering");
+            });
+
+            modelBuilder.Entity<SpecialProject>(entity =>
+            {
+                entity.ToTable("SpecialProject");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -304,89 +252,15 @@ namespace DL
                     .HasColumnType("date")
                     .HasColumnName("start_registration");
 
-                entity.Property(e => e.Year).HasColumnName("year");
-            });
-
-            modelBuilder.Entity<Register>(entity =>
-            {
-                entity.ToTable("Register");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Challenging).HasColumnName("challenging");
-
-                entity.Property(e => e.Comment).HasColumnName("comment");
-
-                entity.Property(e => e.NeihborhoodId).HasColumnName("neihborhood_id");
-
-                entity.Property(e => e.OneTime).HasColumnName("one_time");
-
-                entity.Property(e => e.Regulary).HasColumnName("regulary");
-
-                entity.Property(e => e.StudentId).HasColumnName("student_id");
-
-                entity.Property(e => e.StudentId2).HasColumnName("student_id2");
-
                 entity.Property(e => e.VolunteerTypeId).HasColumnName("volunteer_type_id");
 
                 entity.Property(e => e.Year).HasColumnName("year");
 
-                entity.HasOne(d => d.Neihborhood)
-                    .WithMany(p => p.Registers)
-                    .HasForeignKey(d => d.NeihborhoodId)
-                    .HasConstraintName("FK_Register_Neighborhood");
-
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.RegisterStudents)
-                    .HasForeignKey(d => d.StudentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Register_Student");
-
-                entity.HasOne(d => d.StudentId2Navigation)
-                    .WithMany(p => p.RegisterStudentId2Navigations)
-                    .HasForeignKey(d => d.StudentId2)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Register_Student1");
-
                 entity.HasOne(d => d.VolunteerType)
-                    .WithMany(p => p.Registers)
+                    .WithMany(p => p.SpecialProjects)
                     .HasForeignKey(d => d.VolunteerTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Register_VolunteerType");
-            });
-
-            modelBuilder.Entity<Report>(entity =>
-            {
-                entity.ToTable("Report");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Comments).HasColumnName("comments");
-
-                entity.Property(e => e.NumOfVisits).HasColumnName("num_of_visits");
-
-                entity.Property(e => e.RegisterId).HasColumnName("register_id");
-
-                entity.Property(e => e.SDate)
-                    .HasColumnType("date")
-                    .HasColumnName("s_date");
-
-                entity.HasOne(d => d.Register)
-                    .WithMany(p => p.Reports)
-                    .HasForeignKey(d => d.RegisterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Report_Register");
-            });
-
-            modelBuilder.Entity<Status>(entity =>
-            {
-                entity.ToTable("Status");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasColumnName("description");
+                    .HasConstraintName("FK_SpecialProject_VolunteerType");
             });
 
             modelBuilder.Entity<Student>(entity =>
@@ -395,63 +269,88 @@ namespace DL
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.ClassNum).HasColumnName("class_num");
+
                 entity.Property(e => e.GradeId).HasColumnName("grade_id");
 
-                entity.Property(e => e.NeighborhoodId).HasColumnName("neighborhood_id");
+                entity.Property(e => e.IsVolunteer).HasColumnName("is_volunteer");
 
-                entity.Property(e => e.PersonId).HasColumnName("person_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Grade)
                     .WithMany(p => p.Students)
                     .HasForeignKey(d => d.GradeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Student_Grade");
+                    .HasConstraintName("FK_Student_Grade1");
 
-                entity.HasOne(d => d.Neighborhood)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Students)
-                    .HasForeignKey(d => d.NeighborhoodId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Student_Neighborhood");
-
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.Students)
-                    .HasForeignKey(d => d.PersonId)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Student_Person");
             });
 
-            modelBuilder.Entity<StudentComment>(entity =>
+            modelBuilder.Entity<StudentsVolunteering>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.ToTable("StudentsVolunteering");
 
-                entity.Property(e => e.Comment).HasColumnName("comment");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
 
+                entity.Property(e => e.VolunteeringId).HasColumnName("volunteering_id");
+
                 entity.HasOne(d => d.Student)
-                    .WithMany(p => p.StudentComments)
+                    .WithMany(p => p.StudentsVolunteerings)
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StudentComments_Student");
+                    .HasConstraintName("FK_StudentsVolunteering_Student");
+
+                entity.HasOne(d => d.Volunteering)
+                    .WithMany(p => p.StudentsVolunteerings)
+                    .HasForeignKey(d => d.VolunteeringId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StudentsVolunteering_Volunteering");
             });
 
-            modelBuilder.Entity<StudentYear>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("StudentYear");
+                entity.ToTable("User");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ClassNumber).HasColumnName("class_number");
+                entity.Property(e => e.CellphoneNumber)
+                    .HasMaxLength(10)
+                    .HasColumnName("cellphone_number")
+                    .IsFixedLength(true);
 
-                entity.Property(e => e.StudentId).HasColumnName("student_id");
+                entity.Property(e => e.IdNumber)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("id_number")
+                    .IsFixedLength(true);
 
-                entity.Property(e => e.Year).HasColumnName("year");
+                entity.Property(e => e.IsAdmin).HasColumnName("is_admin");
 
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.StudentYears)
-                    .HasForeignKey(d => d.StudentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StudentYear_Student");
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(10)
+                    .HasColumnName("phone_number")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Salt)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("salt");
             });
 
             modelBuilder.Entity<VolunteerType>(entity =>
@@ -460,10 +359,47 @@ namespace DL
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Dscription)
+                entity.Property(e => e.Type)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("dscription");
+                    .HasColumnName("type");
+            });
+
+            modelBuilder.Entity<Volunteering>(entity =>
+            {
+                entity.ToTable("Volunteering");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Challenging).HasColumnName("challenging");
+
+                entity.Property(e => e.Comment).HasColumnName("comment");
+
+                entity.Property(e => e.DateOfMatch)
+                    .HasColumnType("date")
+                    .HasColumnName("date_of_match");
+
+                entity.Property(e => e.FamilyId).HasColumnName("family_id");
+
+                entity.Property(e => e.Neihborhood)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("neihborhood");
+
+                entity.Property(e => e.VolunteerTypeId).HasColumnName("volunteer_type_id");
+
+                entity.Property(e => e.Year).HasColumnName("year");
+
+                entity.HasOne(d => d.Family)
+                    .WithMany(p => p.Volunteerings)
+                    .HasForeignKey(d => d.FamilyId)
+                    .HasConstraintName("FK_Volunteering_Family");
+
+                entity.HasOne(d => d.VolunteerType)
+                    .WithMany(p => p.Volunteerings)
+                    .HasForeignKey(d => d.VolunteerTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Volunteering_VolunteerType");
             });
 
             OnModelCreatingPartial(modelBuilder);

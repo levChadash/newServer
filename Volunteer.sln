@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DL", "DL\DL.csproj", "{0865
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{32F34991-BB06-4F74-8D60-D8E86A48F265}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{B630EBEC-486D-4624-95BA-F8BEABBB3061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{B630EBEC-486D-4624-95BA-F8BEABBB3061}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

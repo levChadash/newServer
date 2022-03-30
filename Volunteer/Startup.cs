@@ -1,6 +1,7 @@
 using AutoMapper;
 using BL;
 using DL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -58,30 +60,30 @@ namespace Volunteer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Volunteer", Version = "v1" });
-                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                //{
-                //    Name = "Authorization",
-                //    Type = SecuritySchemeType.ApiKey,
-                //    Scheme = "Bearer",
-                //    BearerFormat = "JWT",
-                //    In = ParameterLocation.Header,
-                //    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
-                //});
-                //c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                //{
-                //    {
-                //          new OpenApiSecurityScheme
-                //            {
-                //                Reference = new OpenApiReference
-                //                {
-                //                    Type = ReferenceType.SecurityScheme,
-                //                    Id = "Bearer"
-                //                }
-                //            },
-                //            new string[] {}
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
 
-                //    }
-                //});
+                    }
+                });
                 c.OperationFilter<SwaggerFileOperationFilter>();
             });
 
@@ -94,39 +96,46 @@ namespace Volunteer
             services.AddScoped<IFamilyBL, FamilyBL>();
             services.AddScoped<ICommentDL, CommentDL>();
             services.AddScoped<ICommentBL, CommentBL>();
-            services.AddScoped<IPesachProjectDL, PesachProjectDL>();
-            services.AddScoped<IPesachProjectBL, PesachProjectBL>();
-            services.AddScoped<IRegisterDL, RegisterDL>();
-            services.AddScoped<IRegisterBL, RegisterBL>();
+            services.AddScoped<ISpecialProjectDL, SpecialProjectDL>();
+            services.AddScoped<ISpecialProjectBL, SpecialProjectBL>();
+            services.AddScoped<IVolunteeringDL, VolunteeringDL>();
+            services.AddScoped<IVolunteeringBL, VolunteeringBL>();
             services.AddScoped<IReportDL, ReportDL>();
             services.AddScoped<IReportBL, ReportBL>();
             services.AddScoped<IStudentDL, StudentDL>();
             services.AddScoped<IStudentBL, StudentBL>();
-            services.AddScoped<IAdminDL, AdminDL>();
-            services.AddScoped<IAdminBL, AdminBL>();
             services.AddScoped<IGradeDL, GradeDL>();
-            services.AddScoped<INieghborhoodDL, NieghborhoodDL>();
-            services.AddScoped<Itry2,try2>();
-            services.AddScoped<IMatchDL, MatchDL>();
-            services.AddScoped<IMatchBL, MatchBL>();
-            services.AddResponseCaching();
-            //var key = Encoding.ASCII.GetBytes(Configuration.GetSection("key").Value);
-            //services.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(x =>
-            //{
+            services.AddScoped<IUserDL,UserDL>();
+            services.AddScoped<IUserBL, UserBL>();
+            services.AddScoped<IPasswordHashHelperBL, PasswordHashHelperBL>();
+            services.AddScoped<IstudentsVolunteeringBL, studentsVolunteeringBL>();
+            services.AddScoped<IstudentsVolunteeringDL, studentsVolunteeringDL>();
+            services.AddScoped<IVolunteerTypeBL, VolunteerTypeBL>();
+            services.AddScoped<IVolunteerTypeDL, VolunteerTypeDL>();
+            services.AddScoped<IAbsentDL, AbsentDL>();
+            services.AddScoped<IAbsentBL, AbsentBL>();
 
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(key),
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false
-            //    };
-            //});
+
+            //services.AddScoped<Itry2,try2>();
+
+            services.AddResponseCaching();
+            var key = Encoding.ASCII.GetBytes(Configuration.GetSection("key").Value);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

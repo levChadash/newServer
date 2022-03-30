@@ -35,6 +35,7 @@ namespace BL
         {
             return await commentdl.putComment(cmt);
         }
+        //delete
         public async Task deleteComment(int id)
         {
 
