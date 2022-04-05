@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    class CommentDTO
+     public class CommentDTO
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }

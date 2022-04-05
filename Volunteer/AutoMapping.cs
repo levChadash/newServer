@@ -31,7 +31,11 @@ namespace Volunteer
                         //.ForMember(des => des.Status, opts => opts
                         //.MapFrom(src => src.Status.Description))
                         .ReverseMap();
-           
-         
+            CreateMap<Comment, CommentDTO>()
+                .ForMember(des=>des.FromUserName,opts=>opts
+                .MapFrom(src=>src.FromUser.Name))
+                 .ReverseMap();
+
+
         }
 }}

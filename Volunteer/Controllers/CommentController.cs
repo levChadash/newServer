@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BL;
 using Entity;
 using Microsoft.AspNetCore.Authorization;
+using DTO;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,7 +29,11 @@ namespace Volunteer.Controllers
         }
         // GET api/<CommentController>/5
         [HttpGet]
-        public async Task<List<Comment>> getComments()
+        public async Task<ActionResult<List<FamilyDTO>>> Get()
+        {
+            
+        }
+        public async Task<ActionResult<List<CommentDTO>>> getComments()
         {
             return await commentbl.getComments();
         }
