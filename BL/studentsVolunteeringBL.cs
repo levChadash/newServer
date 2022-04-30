@@ -23,5 +23,9 @@ namespace BL
         {
             return await studentsvolunteeringdl.post(studentsVolunteering);
         }
+        public async Task delete(int id)
+        {
+            await studentsvolunteeringdl.delete(id);
+        }
     }
 }

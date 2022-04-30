@@ -6,9 +6,9 @@ namespace BL
 {
     public interface IVolunteeringBL
     {
-        Task deleteRegister(int id);
-        Task<List<Volunteering>> GetRegister();
-        Task<int> postRegister(Volunteering rg);
-        Task<Volunteering> putRegister(Volunteering rg);
+        Task delete(int id);
+        Task<List<Volunteering>> Get();
+        Task<int> post(Volunteering rg);
+        Task<Volunteering> put(Volunteering rg);
     }
 }

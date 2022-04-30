@@ -29,11 +29,11 @@ namespace Volunteer.Controllers
         }
         // GET api/<CommentController>/5
         [HttpGet]
-        public async Task<ActionResult<List<FamilyDTO>>> Get()
-        {
+        //public async Task<ActionResult<List<FamilyDTO>>> Get()
+        //{
             
-        }
-        public async Task<ActionResult<List<CommentDTO>>> getComments()
+        //}
+        public async Task<ActionResult<List<Comment>>> getComments()
         {
             return await commentbl.getComments();
         }

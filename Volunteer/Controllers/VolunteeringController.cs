@@ -23,7 +23,7 @@ namespace Volunteer.Controllers
         [HttpGet]
         public async Task<List<Volunteering>> Get()
         {
-            return await volunteeringbl.GetRegister();
+            return await volunteeringbl.Get();
         }
         //[HttpGet]
       
@@ -38,21 +38,21 @@ namespace Volunteer.Controllers
         [HttpPost]
         public async Task<int> Post([FromBody] Volunteering rg)
         {
-           return await volunteeringbl.postRegister(rg);
+           return await volunteeringbl.post(rg);
         }
 
         // PUT api/<RegisterController>/5
         [HttpPut]
         public async Task<Volunteering> Put([FromBody] Volunteering rg)
         {
-            return await volunteeringbl.putRegister(rg);
+            return await volunteeringbl.put(rg);
         }
 
         // DELETE api/<RegisterController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            await volunteeringbl.deleteRegister(id);
+            await volunteeringbl.delete(id);
         }
     }
 }

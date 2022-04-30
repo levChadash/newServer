@@ -6,11 +6,12 @@ namespace DL
 {
     public interface IVolunteeringDL
     {
-        Task deleteRegister(int id);
-        Task<List<Volunteering>> GetRegister();
+        Task delete(int id);
+        Task<List<Volunteering>> Get();
        // Task<Volunteering> GetVolunteeringByFamilyId(int id);
-        Task<int> postRegister(Volunteering rg);
-        Task<Volunteering> putRegister(Volunteering rg);
-        Task<Volunteering> getRegisterById(int id);
+        Task<int> post(Volunteering rg);
+        Task<Volunteering> put(Volunteering rg);
+        Task<Volunteering> getById(int id);
+        Task<List<Volunteering>> getByFamilyId(int id);
     }
 }

@@ -48,8 +48,9 @@ namespace Volunteer.Controllers
 
         // DELETE api/<studentsVolunteeringController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await this.studentsvolunteeringbl.delete(id);
         }
     }
 }

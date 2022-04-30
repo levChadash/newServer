@@ -5,6 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BL;
 using Entity;
+using System.Net;
+using System.IO;
+
+using GoogleApi.Entities.Common;
+using GoogleApi.Entities.Maps.Directions.Request;
+using GoogleApi.Entities.Maps.Directions.Response;
+using GoogleApi.Entities.Maps.Geocoding.PlusCode.Request;
+using GoogleApi.Entities.Maps.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -47,8 +55,28 @@ namespace Volunteer.Controllers
 
         // DELETE api/<VolunteerTypeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Distance Delete(int id)
         {
+            string origion = "הר נוף";
+            string destination = "בית וגן";
+            Address aOrigion = new Address(origion);
+            Address aDestination = new Address(destination);
+
+            LocationEx origionlx = new LocationEx(aOrigion);
+            LocationEx destinationlx = new LocationEx(aDestination);
+
+            DirectionsRequest request = new DirectionsRequest();
+
+            request.Key = "AIzaSyBHO2BM3GPRMdYEajDEy9hph9GESt8bXrA";
+            request.Origin = origionlx;
+            request.Destination = destinationlx;
+
+            var response = GoogleApi.GoogleMaps.Directions.Query(request);
+            return response.Routes.First().Legs.First().Distance;
+          
+
         }
+
     }
 }
+

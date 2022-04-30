@@ -10,15 +10,17 @@ namespace BL
     public class VolunteeringBL : IVolunteeringBL
     {
         IVolunteeringDL volunteeringdl;
-        public VolunteeringBL(IVolunteeringDL volunteeringdl)
+        IstudentsVolunteeringDL volunteeringstudentsdl;
+        public VolunteeringBL(IVolunteeringDL volunteeringdl, IstudentsVolunteeringDL volunteeringstudentsdl)
         {
             this.volunteeringdl = volunteeringdl;
+            this.volunteeringstudentsdl = volunteeringstudentsdl;
         }
 
         //get
-        public async Task<List<Volunteering>> GetRegister()
+        public async Task<List<Volunteering>> Get()
         {
-            return await volunteeringdl.GetRegister();
+            return await volunteeringdl.Get();
         }
         //getbyfamilyid
         //public async Task<List<Volunteering>> GetVolunteeringByFamilyId(int id)
@@ -28,20 +30,21 @@ namespace BL
 
 
         //post
-        public async Task<int> postRegister(Volunteering rg)
+        public async Task<int> post(Volunteering rg)
         {
-            return await volunteeringdl.postRegister(rg);
+            return await volunteeringdl.post(rg);
 
         }
         //put
-        public async Task<Volunteering> putRegister(Volunteering rg)
+        public async Task<Volunteering> put(Volunteering rg)
         {
-            return await volunteeringdl.putRegister(rg);
+            return await volunteeringdl.put(rg);
         }
         //delete
-        public async Task deleteRegister(int id)
+        public async Task delete(int id)
         {
-            await volunteeringdl.deleteRegister(id);
+            await volunteeringstudentsdl.deleteByVolunteeringId(id);
+            await volunteeringdl.delete(id);
         }
 
     }

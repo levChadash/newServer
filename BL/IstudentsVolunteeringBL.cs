@@ -7,5 +7,6 @@ namespace BL
     {
         Task<StudentsVolunteering> GetByStudentId(int id);
         Task<int> post(StudentsVolunteering studentsVolunteering);
+        Task delete(int id);
     }
 }

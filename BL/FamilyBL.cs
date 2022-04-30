@@ -11,8 +11,12 @@ namespace BL
     public class FamilyBL : IFamilyBL
     {
         IFamilyDL familydl;
-        public FamilyBL(IFamilyDL familydl)
+        IVolunteeringBL volunteeringbl;
+        IVolunteeringDL volunteeringdl;
+        public FamilyBL(IFamilyDL familydl, IVolunteeringBL volunteeringbl, IVolunteeringDL volunteeringdl)
         {
+            this.volunteeringdl = volunteeringdl;
+            this.volunteeringbl = volunteeringbl;
             this.familydl = familydl;
         }
         //get
@@ -41,6 +45,11 @@ namespace BL
         //delete
         public async Task DeleteFamily(int id)
         {
+           List<Volunteering> lv= await volunteeringdl.getByFamilyId(id);
+            foreach (Volunteering v in lv)
+            {
+                volunteeringbl.delete(v.Id);
+            }
             await familydl.DeleteFamily(id);
         }
     }

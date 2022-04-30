@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -24,8 +25,9 @@ namespace Entity
         public bool Challenging { get; set; }
         public bool Active { get; set; }
         public bool OneTime { get; set; }
-
+        [JsonIgnore]
         public virtual VolunteerType VolunteerType { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Volunteering> Volunteerings { get; set; }
     }
 }

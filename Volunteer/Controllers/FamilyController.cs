@@ -59,19 +59,18 @@ namespace Volunteer.Controllers
         [HttpPost]
         public  async Task<int> Post([FromBody] Family new_family)
         {
-
-
             return await familybl.PostFamily(new_family);
         }
     
         //put family
         // PUT api/<FamilyController>/5
-        [HttpPut("{id}")]
-       public async Task<FamilyDTO> Put( [FromBody] Family family)
+        [HttpPut]
+        //("{id}")
+       public async Task<Family> Put( [FromBody] Family family)
        {
             Family f= await familybl.PutFamily(family);
-            FamilyDTO fDTO = mapper.Map<Family, FamilyDTO>(f);
-            return fDTO;
+            //FamilyDTO fDTO = mapper.Map<Family, FamilyDTO>(f);
+            return f;
        }
         //delete family
         // DELETE api/<FamilyController>/5

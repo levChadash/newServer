@@ -25,5 +25,25 @@ namespace DL
             await vrc.SaveChangesAsync();
             return studentsVolunteering.Id;
         }
+        public async Task delete(int id)
+        {
+            StudentsVolunteering st = await vrc.StudentsVolunteerings.FindAsync(id);
+            if (st == null)
+                throw new Exception();
+            vrc.StudentsVolunteerings.Remove(st);
+            await vrc.SaveChangesAsync();
+        }
+        public async Task deleteByVolunteeringId(int id)
+        {
+            List<StudentsVolunteering> st = await vrc.StudentsVolunteerings.Where(sv=>sv.VolunteeringId==id).ToListAsync();
+            if (st == null)
+                throw new Exception();
+            foreach(StudentsVolunteering studentv in st)
+            {
+                vrc.StudentsVolunteerings.Remove(studentv);
+
+            }
+            await vrc.SaveChangesAsync();
+        }
     }
 }

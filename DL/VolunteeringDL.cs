@@ -16,13 +16,13 @@ namespace DL
             this.vrc = vrc;
         }
         //get
-        public async Task<List<Volunteering>> GetRegister()
+        public async Task<List<Volunteering>> Get()
         {
             List<Volunteering> registers = await vrc.Volunteerings.ToListAsync();
             return registers;
         }
         //getById
-        public async Task<Volunteering> getRegisterById(int id)
+        public async Task<Volunteering> getById(int id)
         {
             Volunteering RegisterById = await vrc.Volunteerings.FindAsync(id);
             return RegisterById;
@@ -34,14 +34,14 @@ namespace DL
 
         //}
         //post
-        public async Task<int> postRegister(Volunteering rg)
+        public async Task<int> post(Volunteering rg)
         {
             await vrc.Volunteerings.AddAsync(rg);
             await vrc.SaveChangesAsync();
             return rg.Id;
         }
         //put
-        public async Task<Volunteering> putRegister(Volunteering rg)
+        public async Task<Volunteering> put(Volunteering rg)
         {
             Volunteering registerToUpDate = await vrc.Volunteerings.FindAsync(rg.Id);
             if (registerToUpDate == null)
@@ -51,13 +51,21 @@ namespace DL
             return rg;
         }
         //delete
-        public async Task deleteRegister(int id)
+        public async Task delete(int id)
         {
             Volunteering rt = await vrc.Volunteerings.FindAsync(id);
             if (rt == null)
                 throw new Exception();
             vrc.Volunteerings.Remove(rt);
             await vrc.SaveChangesAsync();
+        }
+        public async Task<List<Volunteering>> getByFamilyId(int id)
+        {
+            List<Volunteering> lv = await vrc.Volunteerings.Where(v=>v.FamilyId==id).ToListAsync();
+            if (lv == null)
+                throw new Exception();
+            return lv;
+            
         }
 
     }
