@@ -1,4 +1,5 @@
 ﻿using Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,12 @@ namespace DL
         public AbsentDL(VolunteerContext vrc)
         {
             this.vrc = vrc;
+        }
+        //get
+        public async Task<List<Absent>> Get()
+        {
+            List<Absent> absents = await vrc.Absents.ToListAsync();
+            return absents;
         }
         public async Task<int> postAbsent(Absent abs)
         {

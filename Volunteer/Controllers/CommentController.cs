@@ -31,13 +31,18 @@ namespace Volunteer.Controllers
         }
         // GET api/<CommentController>/5
         [HttpGet]
-        public async Task<ActionResult<List<FamilyDTO>>> Get()
-        {
-            
-        }
+       
         public async Task<ActionResult<List<CommentDTO>>> getComments()
         {
-            return await commentbl.getComments();
+            List<Comment> lf = await commentbl.getComments();
+            if (lf == null)
+            {
+                return NoContent();
+            }
+            List<CommentDTO> lcDTO = mapper.Map<List<Comment>, List<CommentDTO>>(lf);
+            return lcDTO;
+          
+
         }
 
         // GET api/<Comme\ntController>/5

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 using Entity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DL
@@ -55,7 +57,15 @@ namespace DL
              vrc.Comments.Remove(ct);
             await vrc.SaveChangesAsync();
         }
-       
 
+        public Task<List<Volunteering>> GetNotSet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ActionResult<List<StudentVolunteeringDTO>>> GetByVolunteeringId(int volunteeringId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

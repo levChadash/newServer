@@ -8,6 +8,7 @@ namespace DL
     {
         Task delete(int id);
         Task<List<Volunteering>> Get();
+        Task<List<Volunteering>> GetNotSet();
        // Task<Volunteering> GetVolunteeringByFamilyId(int id);
         Task<int> post(Volunteering rg);
         Task<Volunteering> put(Volunteering rg);

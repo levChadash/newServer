@@ -32,12 +32,12 @@ namespace Volunteer.Controllers
 
         // GET: api/<RegisterController>
         [HttpGet("notSet")]
-        public async Task<ActionResult<List<VolunteeringDTO>>> GetNotSet()
+        public async Task<List<VolunteeringDTO>> GetNotSet()
         {
-          List<Volunteering> lv = await volunteeringbl.GetNotSet();
+            List<Volunteering>  lv = await volunteeringbl.GetNotSet();
            if (lv== null)
             {
-             return NoContent();
+            // return NoContent();
             }
           List<VolunteeringDTO> lvDTO = mapper.Map<List<Volunteering>, List<VolunteeringDTO>>(lv);
             return lvDTO;

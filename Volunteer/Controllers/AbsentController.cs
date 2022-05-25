@@ -24,17 +24,19 @@ namespace Volunteer.Controllers
         }
         // GET: api/<AbsentController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<List<Absent>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<Absent> lA = await absentbl.Get();
+            if (lA == null)
+            {
+                return NoContent();
+            }
+          
+            return lA;
         }
 
-        // GET api/<AbsentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+
+
 
         // POST api/<AbsentController>
         [HttpPost]

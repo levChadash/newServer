@@ -15,6 +15,12 @@ namespace BL
         {
             this.absentdl = absentdl;
         }
+
+        public async Task<List<Absent>> Get()
+        {
+            return await absentdl.Get();
+        }
+
         public async Task<int> postAbsent(Absent abs)
         {
 
