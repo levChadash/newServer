@@ -19,6 +19,11 @@ namespace BL
         {
             return await studentsvolunteeringdl.GetByStudentId(id);
         }
+
+        public async Task<List<StudentsVolunteering>> GetByVolunteeringId(int volunteeringId)
+        {
+            return await studentsvolunteeringdl.GetByVolunteeringId(volunteeringId);
+        }   
         public async Task<int> post(StudentsVolunteering studentsVolunteering)
         {
             return await studentsvolunteeringdl.post(studentsVolunteering);

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entity;
 using BL;
+using DTO;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,9 +17,11 @@ namespace Volunteer.Controllers
     public class VolunteeringController : ControllerBase
     {
         IVolunteeringBL volunteeringbl;
-        public VolunteeringController(IVolunteeringBL registerbl)
+        IMapper mapper;
+        public VolunteeringController(IVolunteeringBL registerbl, IMapper mapper)
         {
             this.volunteeringbl = registerbl;
+            this.mapper = mapper;
         }
         // GET: api/<RegisterController>
         [HttpGet]
@@ -25,17 +29,22 @@ namespace Volunteer.Controllers
         {
             return await volunteeringbl.Get();
         }
-        //[HttpGet]
-      
-        // GET api/<RegisterController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
-        // POST api/<RegisterController>
-        [HttpPost]
+        // GET: api/<RegisterController>
+        [HttpGet("notSet")]
+        public async Task<ActionResult<List<VolunteeringDTO>>> GetNotSet()
+        {
+          List<Volunteering> lv = await volunteeringbl.GetNotSet();
+           if (lv== null)
+            {
+             return NoContent();
+            }
+          List<VolunteeringDTO> lvDTO = mapper.Map<List<Volunteering>, List<VolunteeringDTO>>(lv);
+            return lvDTO;
+        }
+
+    // POST api/<RegisterController>
+    [HttpPost]
         public async Task<int> Post([FromBody] Volunteering rg)
         {
            return await volunteeringbl.post(rg);

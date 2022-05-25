@@ -11,6 +11,7 @@ namespace DL
     public class studentsVolunteeringDL : IstudentsVolunteeringDL
     {
         VolunteerContext vrc;
+
         public studentsVolunteeringDL(VolunteerContext vrc)
         {
             this.vrc = vrc;
@@ -19,6 +20,20 @@ namespace DL
         {
             return await vrc.StudentsVolunteerings.Where(x => x.StudentId == id).FirstOrDefaultAsync();
         }
+        public async Task<List<StudentsVolunteering>> GetByVolunteeringId(int volunteeringId)
+        {
+            List<StudentsVolunteering> sl = await vrc.StudentsVolunteerings.
+                Where(s => s.VolunteeringId == volunteeringId).Include(s => s.Volunteering)
+                .ThenInclude(s=>s.VolunteerType)
+                .Include(s=>s.Student)
+                .ThenInclude(s=>s.User).ToListAsync();
+
+            return sl;
+
+        }
+
+
+
         public async Task<int> post(StudentsVolunteering studentsVolunteering)
         {
             await vrc.StudentsVolunteerings.AddAsync(studentsVolunteering);

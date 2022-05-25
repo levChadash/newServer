@@ -20,7 +20,7 @@ namespace DL
         //get
         public async Task<List<Comment>> getComments()
         {
-            List<Comment> commentL = await vrc.Comments.ToListAsync();
+            List<Comment> commentL = await vrc.Comments.Include(s => s.VolunteerType).Include(s => s.FromUser). ToListAsync(); 
             return commentL;
         }
         //getById
@@ -52,7 +52,7 @@ namespace DL
             Comment ct = await vrc.Comments.FindAsync(id);
             if (ct == null)
                 throw new Exception();
-            vrc.Comments.Remove(ct);
+             vrc.Comments.Remove(ct);
             await vrc.SaveChangesAsync();
         }
        

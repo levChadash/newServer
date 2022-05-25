@@ -22,6 +22,15 @@ namespace BL
         {
             return await volunteeringdl.Get();
         }
+
+
+        //get not set
+        public async Task<List<Volunteering>> GetNotSet()
+        {
+            return await volunteeringdl.GetNotSet();
+        }
+
+
         //getbyfamilyid
         //public async Task<List<Volunteering>> GetVolunteeringByFamilyId(int id)
         //{

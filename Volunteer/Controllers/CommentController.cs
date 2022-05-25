@@ -7,6 +7,7 @@ using BL;
 using Entity;
 using Microsoft.AspNetCore.Authorization;
 using DTO;
+using AutoMapper;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,24 +21,26 @@ namespace Volunteer.Controllers
     {
 
         ICommentBL commentbl;
+        IMapper mapper;
 
-
-        public CommentController(ICommentBL commentbl)
+        public CommentController(ICommentBL commentbl, IMapper mapper)
         {
             this.commentbl = commentbl;
+            this.mapper = mapper;
 
         }
         // GET api/<CommentController>/5
         [HttpGet]
-        //public async Task<ActionResult<List<FamilyDTO>>> Get()
-        //{
+        public async Task<ActionResult<List<FamilyDTO>>> Get()
+        {
             
-        //}
-        public async Task<ActionResult<List<Comment>>> getComments()
+        }
+        public async Task<ActionResult<List<CommentDTO>>> getComments()
         {
             return await commentbl.getComments();
         }
-        // GET api/<CommentController>/5
+
+        // GET api/<Comme\ntController>/5
         [HttpGet("{id}")]
         public async Task<Comment> getCommentById(int id)
         {
