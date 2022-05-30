@@ -15,6 +15,6 @@ namespace DTO
         public string Comment { get; set; }
         public int Year { get; set; }
         public bool Challenging { get; set; }
-        public string Neihborhood { get; set; }
+        public string Neighborhood { get; set; }
     }
 }

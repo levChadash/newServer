@@ -217,7 +217,7 @@ namespace DL {
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Comments).HasColumnName("comments");
+                entity.Property(e => e.Comment).HasColumnName("comments");
 
                 entity.Property(e => e.EDate)
                     .HasColumnType("date")
@@ -381,10 +381,10 @@ namespace DL {
 
                 entity.Property(e => e.FamilyId).HasColumnName("family_id");
 
-                entity.Property(e => e.Neihborhood)
+                entity.Property(e => e.Neighborhood)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("neihborhood");
+                    .HasColumnName("neighborhood");
 
                 entity.Property(e => e.VolunteerTypeId).HasColumnName("volunteer_type_id");
 
