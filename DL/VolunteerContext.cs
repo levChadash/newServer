@@ -384,7 +384,7 @@ namespace DL {
                 entity.Property(e => e.Neighborhood)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("neihborhood");
+                    .HasColumnName("neighborhood");
 
                 entity.Property(e => e.VolunteerTypeId).HasColumnName("volunteer_type_id");
 
