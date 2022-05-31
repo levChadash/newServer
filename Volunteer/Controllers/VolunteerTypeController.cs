@@ -73,7 +73,7 @@ namespace Volunteer.Controllers
 
             var response = GoogleApi.GoogleMaps.Directions.Query(request);
             return response.Routes.First().Legs.First().Distance;
-          
+
 
         }
 

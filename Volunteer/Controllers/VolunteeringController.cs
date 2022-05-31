@@ -57,12 +57,21 @@ namespace Volunteer.Controllers
             return await volunteeringbl.put(rg);
         }
 
+        // PUT api/<RegisterController>/5
+        [HttpPut("{family}")]
+        public async Task<Volunteering> Put([FromBody] FamilyDTO family)
+        {
+            return await volunteeringbl.PutFamily(family);
+        }
+
         // DELETE api/<RegisterController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
             await volunteeringbl.delete(id);
         }
+
+
     }
 }
 

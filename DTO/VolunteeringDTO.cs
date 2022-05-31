@@ -16,5 +16,6 @@ namespace DTO
         public int Year { get; set; }
         public bool Challenging { get; set; }
         public string Neighborhood { get; set; }
+        
     }
 }

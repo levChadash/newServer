@@ -16,6 +16,7 @@ namespace DTO
         public string Email { get; set; }
         public string Neighborhood { get; set; }
         public string VolunteerType { get; set; }
+        public int VolunteerTypeId { get; set; }
         public bool Approved { get; set; }
         public bool Challenging { get; set; }
         public bool Active { get; set; }

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{B630EBEC-486D-4624-95BA-F8BEABBB3061}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleApi", "..\..\Users\user\Desktop\GoogleApi-master\GoogleApi\GoogleApi.csproj", "{F692AF70-CB93-423C-AE1C-929D79B42EC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleApi", "..\..\..\Users\user\Desktop\GoogleApi-master\GoogleApi\GoogleApi.csproj", "{B14DBE11-4C8B-4B2B-88BB-6C78EBD336CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{B630EBEC-486D-4624-95BA-F8BEABBB3061}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B630EBEC-486D-4624-95BA-F8BEABBB3061}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B630EBEC-486D-4624-95BA-F8BEABBB3061}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F692AF70-CB93-423C-AE1C-929D79B42EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F692AF70-CB93-423C-AE1C-929D79B42EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F692AF70-CB93-423C-AE1C-929D79B42EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F692AF70-CB93-423C-AE1C-929D79B42EC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B14DBE11-4C8B-4B2B-88BB-6C78EBD336CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B14DBE11-4C8B-4B2B-88BB-6C78EBD336CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B14DBE11-4C8B-4B2B-88BB-6C78EBD336CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B14DBE11-4C8B-4B2B-88BB-6C78EBD336CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

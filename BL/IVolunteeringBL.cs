@@ -13,5 +13,6 @@ namespace BL
         Task<List<Volunteering>> GetNotSet();
         Task<int> post(Volunteering rg);
         Task<Volunteering> put(Volunteering rg);
+        Task<Volunteering> PutFamily(FamilyDTO family);
     }
 }
