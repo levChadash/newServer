@@ -22,6 +22,11 @@ namespace DL
             List<Family> familyL = await vrc.Families.Include(s=>s.VolunteerType).ToListAsync();
             return familyL;
         }
+        public async Task<List<Family>> GetNotSetFamilies()
+        {
+            List<Family> familyL = await vrc.Families.Where(f => f.Volunteerings.Count == 0).Include(s => s.VolunteerType).ToListAsync();
+            return familyL;
+        }
         //getById
         public async Task<Family> GetFamilyById(int id)
         {

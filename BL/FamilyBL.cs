@@ -24,6 +24,11 @@ namespace BL
         {
             return await familydl.GetFamilies();
         }
+        //get
+        public async Task<List<Family>> GetNotSetFamilies()
+        {
+            return await familydl.GetNotSetFamilies();
+        }
         //getById
         public async Task<Family> GetFamilyById(int id)
         {

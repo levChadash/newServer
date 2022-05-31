@@ -77,8 +77,8 @@ namespace Volunteer.Controllers
                 uDTO.IsVolunteer = s.IsVolunteer;
                 uDTO.ClassNum = s.ClassNum;
             }
-            if (s.IsVolunteer == false)
-                return uDTO;
+            //if (s.IsVolunteer == false)
+            //    return uDTO;
             StudentsVolunteering stv = await studentsvolunteeringbl.GetByStudentId(s.Id);
             if (stv != null)
             {

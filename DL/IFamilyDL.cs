@@ -7,6 +7,7 @@ namespace DL
      public interface IFamilyDL
     {
         Task<List<Family>> GetFamilies();
+        Task<List<Family>> GetNotSetFamilies();
         Task<Family> GetFamilyById(int id);
         Task<Family> PutFamily(Family family);
         Task<int> PostFamily(Family new_family);

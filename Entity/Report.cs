@@ -12,7 +12,7 @@ namespace Entity
         public DateTime SDate { get; set; }
         public DateTime EDate { get; set; }
         public int VolunteeringId { get; set; }
-        public string Comments { get; set; }
+        public string Comment { get; set; }
 
         public virtual Volunteering Volunteering { get; set; }
     }

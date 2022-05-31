@@ -45,6 +45,18 @@ namespace Volunteer.Controllers
             return lfDTO;
         }
 
+        [HttpGet ("notSet")]
+        public async Task<ActionResult<List<FamilyDTO>>> GetnotSetFamilys()
+        {
+            List<Family> lf = await familybl.GetNotSetFamilies();
+            if (lf == null)
+            {
+                return NoContent();
+            }
+            List<FamilyDTO> lfDTO = mapper.Map<List<Family>, List<FamilyDTO>>(lf);
+            return lfDTO;
+        }
+
         //get family by id
         // GET api/<FamilyController>/5
         [HttpGet("{id}")]

@@ -21,7 +21,7 @@ namespace Entity
         public string Comment { get; set; }
         public int Year { get; set; }
         public bool Challenging { get; set; }
-        public string Neihborhood { get; set; }
+        public string Neighborhood { get; set; }
 
         public virtual Family Family { get; set; }
         public virtual VolunteerType VolunteerType { get; set; }
