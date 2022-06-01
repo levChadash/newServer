@@ -25,9 +25,15 @@ namespace Volunteer.Controllers
         }
         // GET: api/<studentsVolunteeringController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<List<StudentVolunteeringDTO>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<StudentsVolunteering> slv = await studentsvolunteeringbl.Get();
+            if (slv == null)
+            {
+                return NoContent();
+            }
+            List<StudentVolunteeringDTO> slvDTO = mapper.Map<List<StudentsVolunteering>, List<StudentVolunteeringDTO>>(slv);
+            return slvDTO;
         }
 
         // GET api/<studentsVolunteeringController>/5

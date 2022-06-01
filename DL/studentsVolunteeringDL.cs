@@ -15,6 +15,18 @@ namespace DL
         public studentsVolunteeringDL(VolunteerContext vrc)
         {
             this.vrc = vrc;
+        } 
+        public async Task<List<StudentsVolunteering>> Get()
+        {
+            List<StudentsVolunteering> sl = await vrc.StudentsVolunteerings
+               .Where(s => s.Volunteering.FamilyId > 0)
+               .Include(s => s.Volunteering)
+                .ThenInclude(s => s.VolunteerType)
+                .Include(s => s.Student)
+                .ThenInclude(s => s.User).ToListAsync();
+
+            return sl;
+
         }
         public async Task<StudentsVolunteering> GetByStudentId(int id)
         {
