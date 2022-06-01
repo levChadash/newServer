@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -22,11 +23,15 @@ namespace Entity
         public int Year { get; set; }
         public bool Challenging { get; set; }
         public string Neighborhood { get; set; }
-
+        [JsonIgnore]
         public virtual Family Family { get; set; }
+        [JsonIgnore]
         public virtual VolunteerType VolunteerType { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Absent> Absents { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Report> Reports { get; set; }
+        [JsonIgnore]
         public virtual ICollection<StudentsVolunteering> StudentsVolunteerings { get; set; }
     }
 }
