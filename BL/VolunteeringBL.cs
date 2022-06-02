@@ -12,6 +12,7 @@ using GoogleApi.Entities.Maps.Directions.Response;
 using GoogleApi.Entities.Maps.Geocoding.PlusCode.Request;
 using GoogleApi.Entities.Maps.Common;
 using System.Linq;
+using AutoMapper;
 
 namespace BL
 {
@@ -19,10 +20,12 @@ namespace BL
     {
         IVolunteeringDL volunteeringdl;
         IstudentsVolunteeringDL volunteeringstudentsdl;
-        public VolunteeringBL(IVolunteeringDL volunteeringdl, IstudentsVolunteeringDL volunteeringstudentsdl)
+        IMapper mapper;
+        public VolunteeringBL(IVolunteeringDL volunteeringdl, IstudentsVolunteeringDL volunteeringstudentsdl, IMapper mapper)
         {
             this.volunteeringdl = volunteeringdl;
             this.volunteeringstudentsdl = volunteeringstudentsdl;
+            this.mapper = mapper;
         }
 
         //get
@@ -58,7 +61,7 @@ namespace BL
             return await volunteeringdl.put(rg);
         }
 
-        public async Task<Volunteering> PutFamily( FamilyDTO family)
+        public async Task<List<StudentVolunteeringDTO>> PutFamily( FamilyDTO family)
         {
             string origion = family.Neighborhood;
             Address aOrigion = new Address(origion);
@@ -94,8 +97,11 @@ namespace BL
                 }
             }
 
-
-            return minVolunteering;
+            List<StudentsVolunteering> lsv =await volunteeringstudentsdl.GetByVolunteeringId(minVolunteering.Id);
+            List<StudentVolunteeringDTO> lsvd = mapper.Map<List<StudentsVolunteering>, List<StudentVolunteeringDTO>>(lsv);
+           
+            
+            return lsvd;
             
         }
         //delete

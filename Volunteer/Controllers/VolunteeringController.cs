@@ -59,7 +59,7 @@ namespace Volunteer.Controllers
 
         // PUT api/<RegisterController>/5
         [HttpPut("putFamily")]
-        public async Task<Volunteering> Put([FromBody] FamilyDTO family)
+        public async Task<List<StudentVolunteeringDTO>> Put([FromBody] FamilyDTO family)
         {
             return await volunteeringbl.PutFamily(family);
         }

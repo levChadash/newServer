@@ -38,12 +38,6 @@ namespace Volunteer
                  .ForMember(des => des.VolunteerType, opts => opts
                  .MapFrom(src => src.VolunteerType.Type))
                  .ReverseMap();
-            CreateMap<Volunteering, VolunteeringDTO>()
-               .ForMember(des => des.VolunteerType, opts => opts
-                   .MapFrom(src => src.VolunteerType.Type))
-                .ForMember(des => des.FamilyName, opts => opts
-                .MapFrom(src => src.Family.Name))
-                .ReverseMap();
             CreateMap<StudentsVolunteering, StudentVolunteeringDTO>()
                .ForMember(des => des.Name, opts => opts
                .MapFrom(src => src.Student.User.Name))
@@ -56,8 +50,14 @@ namespace Volunteer
                .ForMember(des => des.VolunteeringType, opts => opts
                   .MapFrom(src => src.Volunteering.VolunteerType.Type))
                .ReverseMap();
+            CreateMap<Volunteering, VolunteeringDTO>()
+              .ForMember(des => des.VolunteerType, opts => opts
+                  .MapFrom(src => src.VolunteerType.Type))
+               .ForMember(des => des.FamilyName, opts => opts
+               .MapFrom(src => src.Family.Name))
+               .ReverseMap();
 
-    }
+        }
 }
 }
 
