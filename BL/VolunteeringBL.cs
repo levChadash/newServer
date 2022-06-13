@@ -33,7 +33,12 @@ namespace BL
         {
             return await volunteeringdl.Get();
         }
-
+        //getbyid
+        public async Task<Volunteering> GetById(int id)
+        {
+            Volunteering v = await volunteeringdl.GetById(id);
+            return v;
+        }
 
         //get not set
         public async Task<List<Volunteering>> GetNotSet()

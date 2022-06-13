@@ -30,6 +30,13 @@ namespace Volunteer.Controllers
             return await volunteeringbl.Get();
         }
 
+        [HttpGet("{id}")]
+        public async Task<Volunteering> GetById(int id)
+        {
+            Volunteering v = await volunteeringbl.GetById(id);
+            return v;
+        }
+
         // GET: api/<RegisterController>
         [HttpGet("notSet")]
         public async Task<List<VolunteeringDTO>> GetNotSet()

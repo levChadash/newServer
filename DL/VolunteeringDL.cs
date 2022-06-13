@@ -21,6 +21,15 @@ namespace DL
             List<Volunteering> registers = await vrc.Volunteerings.ToListAsync();
             return registers;
         }
+        //get by id
+        public async Task<Volunteering> GetById(int id)
+        {
+            Volunteering v = await vrc.Volunteerings.Where(s => s.Id == id).FirstOrDefaultAsync();
+            return v;
+        }
+
+
+
         //get not  set volunteerung
         public async Task<List<Volunteering>> GetNotSet()
         {
