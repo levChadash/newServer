@@ -34,6 +34,13 @@ namespace Volunteer.Controllers
         {
             return await this.reportbl.getReporttById(id);
         }
+        //GET api/<ReportController>/5
+        [HttpGet("volunteering/{id}")]
+        public async Task<List<Report>> GetByVolunteerId(int id)
+        {
+            return await this.reportbl.getByVolunteerId(id);
+        }
+
 
         //POST api/<ReportController>
         [HttpPost]

@@ -1,4 +1,5 @@
-﻿using Entity;
+﻿using DotLiquid.Util;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,12 @@ namespace DL
         {
             Report report = await vrc.Reports.FindAsync(id);
             return report;
+        }
+        //getByVolunteerId
+        public async Task<List<Report>> getByVolunteerId(int id)
+        {
+            var reports = await vrc.Reports.Include(s => s.Volunteering).Where(s=>s.VolunteeringId==id).ToListAsync();
+            return reports;
         }
         //post
         public async Task<int> postReport(Report rt)

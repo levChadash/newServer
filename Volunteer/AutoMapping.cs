@@ -49,6 +49,8 @@ namespace Volunteer
                .MapFrom(src => src.Student.Grade))
                .ForMember(des => des.VolunteeringType, opts => opts
                   .MapFrom(src => src.Volunteering.VolunteerType.Type))
+                 . ForMember(des => des.Neighborhood, opts => opts
+               .MapFrom(src => src.Volunteering.Neighborhood))
                .ReverseMap();
             CreateMap<Volunteering, VolunteeringDTO>()
               .ForMember(des => des.VolunteerType, opts => opts

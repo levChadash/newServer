@@ -14,7 +14,9 @@
 
   <ItemGroup>
   
-    <ProjectReference Include="..\..\..\..\Users\user\Desktop\GoogleApi-master\GoogleApi\GoogleApi.csproj" />
+   
+  
+    <ProjectReference Include="..\..\פרויקט\GoogleApi-master\GoogleApi-master\GoogleApi\GoogleApi.csproj" />
   
   
     <ProjectReference Include="..\DL\DL.csproj" />

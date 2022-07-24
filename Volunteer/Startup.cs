@@ -90,7 +90,7 @@ namespace Volunteer
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<VolunteerContext>(options => options.UseSqlServer
           (
-               Configuration.GetConnectionString("home")
+               Configuration.GetConnectionString("miriam")
            ), ServiceLifetime.Scoped) ;
             services.AddScoped<IFamilyDL, FamilyDL>();
             services.AddScoped<IFamilyBL, FamilyBL>();

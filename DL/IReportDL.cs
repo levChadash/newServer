@@ -11,5 +11,6 @@ namespace DL
         Task<Report> getReporttById(int id);
         Task<int> postReport(Report rt);
         Task<Report> putReport(Report rt);
+        Task<List<Report>> getByVolunteerId(int id);
     }
 }

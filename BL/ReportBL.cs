@@ -29,6 +29,11 @@ namespace BL
         {
             return await this.reportdl.getReporttById(id);
         }
+        //getByVolunteerId
+        public async Task<List<Report>> getByVolunteerId(int id)
+        {
+            return await this.reportdl.getByVolunteerId(id);
+        }
         //post
         public async Task<int> postReport(Report rt)
         {

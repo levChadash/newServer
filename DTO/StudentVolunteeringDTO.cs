@@ -17,6 +17,8 @@ namespace DTO
         public string  Grade { get; set; }
         public string VolunteeringType { get; set; }
         public int VolunteeringId { get; set; }
+        public string Neighborhood { get; set; }
+
 
 
 
